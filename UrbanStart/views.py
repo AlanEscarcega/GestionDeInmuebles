@@ -5,3 +5,6 @@ def home(request):
 
 def contact(request):
     return render(request, "UrbanStart/contact.html")
+
+def about(request):
+    return render(request, "UrbanStart/about.html")
