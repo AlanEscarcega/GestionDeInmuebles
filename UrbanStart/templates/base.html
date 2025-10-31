@@ -13,8 +13,7 @@
         <div class="header-container">
             <a href="{% url 'home' %}" class="logo">🔑 HomeKey Central</a>
             <nav class="nav">
-                <a href="{% url 'home' %}">Inicio</a>
-                <a href="{% url 'contact' %}">Contacto</a>
+                {% include 'links.html' %}
             </nav>
         </div>
     </header>
@@ -35,8 +34,7 @@
 
             <div class="footer-links">
                 <h4>Enlaces</h4>
-                <a href="{% url 'home' %}">Inicio</a>
-                <a href="{% url 'contact' %}">Contacto</a>
+                {% include 'links.html' %}
             </div>
 
             <div class="footer-contact">
