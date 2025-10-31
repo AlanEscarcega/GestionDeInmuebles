@@ -22,4 +22,3 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('UrbanStart.urls')),  # Conecta las URLs de la app principal
 ]
-
