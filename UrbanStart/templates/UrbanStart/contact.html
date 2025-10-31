@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Contacto - HomeKey Central{% endblock %}
+
+{% block content %}
+
+<!-- Contact Section -->
+<section class="hero" style="text-align: center; padding: 4rem 2rem;">
+    <h1>Contáctanos</h1>
+    <p>Estamos aquí para ayudarte en cada paso</p>
+
+    <form action="#" method="post" style="margin-top: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Tu nombre" required>
+        <input type="email" name="email" placeholder="tu@email.com" required>
+        <textarea name="message" placeholder="Cuéntanos cómo podemos ayudarte" required></textarea>
+        <button type="submit">Enviar Mensaje</button>
+    </form>
+</section>
+
+{% endblock %}

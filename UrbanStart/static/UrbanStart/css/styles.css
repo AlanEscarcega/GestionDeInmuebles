@@ -1,0 +1,196 @@
+/* ===============================
+   Tipografía y suavizado general
+   =============================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #fff;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+/* ===============================
+   Header / Navbar
+   =============================== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+header .logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+header nav a {
+    margin-left: 1.5rem;
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+header nav a:hover {
+    color: #F0883B; /* naranja cálido */
+}
+
+/* ===============================
+   Main / Hero Section
+   =============================== */
+main {
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.hero {
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: #111;
+    margin-bottom: 1rem;
+}
+
+.hero h1 span {
+    color: #F0883B;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 2rem;
+}
+
+.hero a.button {
+    padding: 0.8rem 2rem;
+    border-radius: 1rem;
+    background: #F0883B;
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 1rem;
+    transition: all 0.3s;
+}
+
+.hero a.button:hover {
+    background: #d97a30;
+}
+
+/* ===============================
+   Forms / Contact Section
+   =============================== */
+form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+form input, form textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+}
+
+form textarea {
+    resize: none;
+    min-height: 150px;
+}
+
+form button {
+    padding: 0.75rem 2rem;
+    border-radius: 1rem;
+    background: #F0883B;
+    color: white;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+form button:hover {
+    background: #d97a30;
+}
+
+/* ===============================
+   Footer
+   =============================== */
+footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+    background: #f8f8f8;
+    font-family: 'Inter', sans-serif;
+    flex-wrap: wrap;
+}
+
+footer div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+footer h3, footer h4 {
+    margin-bottom: 0.5rem;
+    color: #111;
+}
+
+footer a {
+    color: #555;
+    text-decoration: none;
+    margin-bottom: 0.3rem;
+    transition: color 0.3s;
+}
+
+footer a:hover {
+    color: #F0883B;
+}
+
+footer .footer-copy {
+    width: 100%;
+    text-align: left;
+    margin-top: 1rem;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+/* ===============================
+   Misc / Utilities
+   =============================== */
+a {
+    text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
