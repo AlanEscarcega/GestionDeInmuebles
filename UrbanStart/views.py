@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 from .models import Casa, Solicitud
 from .decorators import requiere_cliente
 
-load_dotenv()
 
 # ----------------------------------------
 # Páginas públicas
@@ -101,12 +100,11 @@ def admin_casa_crear(request):
             titulo=request.POST["titulo"],
             descripcion=request.POST["descripcion"],
             precio=request.POST["precio"],
-            imagen=request.FILES.get("imagen")  # 🔶 agregar imagen
+            imagen=request.FILES.get("imagen")
         )
         return redirect("admin_casas")
 
     return render(request, "UrbanStart/admin_casa_form.html")
-
 
 
 # Editar casa con imagen
@@ -118,7 +116,6 @@ def admin_casa_editar(request, id):
         casa.descripcion = request.POST["descripcion"]
         casa.precio = request.POST["precio"]
 
-        #  Si el usuario sube una nueva imagen, se reemplaza
         if request.FILES.get("imagen"):
             casa.imagen = request.FILES["imagen"]
 
@@ -139,5 +136,4 @@ def admin_casa_eliminar(request, id):
 def admin_solicitudes(request):
     solicitudes = Solicitud.objects.all().order_by('-timestamp')
     return render(request, 'UrbanStart/admin_solicitudes.html', {'solicitudes': solicitudes})
-
 
