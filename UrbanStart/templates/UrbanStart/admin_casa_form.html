@@ -1,0 +1,108 @@
+{% extends "UrbanStart/base.html" %}
+{% block content %}
+
+<h1 style="font-weight: 600; margin-bottom: 20px;">
+    {% if casa %}Editar Casa{% else %}Crear Nueva Casa{% endif %}
+</h1>
+
+<form method="POST" enctype="multipart/form-data" 
+      style="background: #ffffff; padding: 22px; border-radius: 16px;
+             box-shadow: 0 4px 12px rgba(0,0,0,0.08); max-width: 600px;">
+    
+    {% csrf_token %}
+
+    <div style="margin-bottom: 16px;">
+        <label for="titulo" style="font-weight:600;">Título:</label><br>
+        <input type="text" id="titulo" name="titulo" value="{{ casa.titulo|default_if_none:'' }}" 
+               style="width: 100%; padding: 10px; border-radius: 10px;
+                      border: 1px solid #ddd; font-size: 15px;">
+    </div>
+
+    <div style="margin-bottom: 16px;">
+        <label for="descripcion" style="font-weight:600;">Descripción:</label><br>
+        <textarea id="descripcion" name="descripcion" rows="4" 
+                  style="width: 100%; padding: 10px; border-radius: 10px;
+                         border: 1px solid #ddd; font-size: 15px;">{{ casa.descripcion|default_if_none:'' }}</textarea>
+    </div>
+
+    <div style="margin-bottom: 16px;">
+        <label for="precio" style="font-weight:600;">Precio:</label><br>
+<input type="number" id="precio" name="precio" step="0.01" required
+       value="{{ casa.precio|default_if_none:'' }}" 
+       style="width: 100%; padding: 10px; border-radius: 10px;
+              border: 1px solid #ddd; font-size: 15px;">
+
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <label for="imagen" style="font-weight:600;">Imagen:</label><br>
+        <input type="file" id="imagen" name="imagen" 
+               style="font-size: 15px; margin-top: 6px;">
+    </div>
+
+    <!-- BOTÓN UIVERSE.IO NARANJA -->
+    <button type="submit" class="uiverse-btn">
+        {% if casa %}Guardar Cambios{% else %}Crear Casa{% endif %}
+    </button>
+
+</form>
+
+<div style="margin-top: 15px;">
+    <a href="{% url 'admin_casas' %}"
+       style="color:#ff6600; font-weight:600; text-decoration:none;
+              font-size:15px;">
+       ← Volver a Gestión de Casas
+    </a>
+</div>
+
+<!-- CSS DEL BOTÓN UIVERSE.IO ADAPTADO -->
+<style>
+/* From Uiverse.io by Yaya12085 — versión NARANJA */
+.uiverse-btn {
+  width: fit-content;
+  display: flex;
+  padding: 1.2em 1rem;
+  cursor: pointer;
+  gap: 0.4rem;
+  font-weight: bold;
+  border-radius: 30px;
+  text-shadow: 2px 2px 3px rgba(255, 102, 0, 0.5);
+  background: linear-gradient(15deg, 
+      #ff6600, 
+      #ff7b22, 
+      #ff8f33, 
+      #ff9d33, 
+      #ffb347, 
+      #ff9d33, 
+      #ff8f33, 
+      #ff7b22, 
+      #ff6600
+  ) no-repeat;
+  background-size: 300%;
+  color: #fff;
+  border: none;
+  background-position: left center;
+  box-shadow: 0 30px 10px -20px rgba(0,0,0,.15);
+  transition: background .3s ease;
+}
+
+.uiverse-btn:hover {
+  background-size: 320%;
+  background-position: right center;
+}
+
+.uiverse-btn:hover svg {
+  fill: #fff;
+}
+
+.uiverse-btn svg {
+  width: 23px;
+  fill: #ff9d33;
+  transition: .3s ease;
+}
+</style>
+
+{% endblock %}
+
+
+

@@ -1,34 +1,13 @@
-{% extends "base.html" %}
+{% extends "UrbanStart/base.html" %}
 
 {% block title %}Inicio - HomeKey Central{% endblock %}
 
 {% block content %}
+<h1>Bienvenido a HomeKey Central</h1>
+<p>Selecciona tu rol para continuar:</p>
 
-<!-- Hero Section -->
-<section class="hero">
-    <h1>Gestión Inmobiliaria <span>Simplificada</span></h1>
-    <p>La plataforma moderna que transforma la manera en que gestionas propiedades. Elegante, intuitiva y poderosa.</p>
-    <div style="margin-top: 2rem;">
-        <a href="{% url 'contact' %}" class="button">Comenzar Ahora</a>
-        <a href="#features" class="button" style="background: none; color: #F0883B; border: 2px solid #F0883B;">Conocer Más</a>
-    </div>
-</section>
-
-<!-- Features Section -->
-<section id="features" style="display: flex; justify-content: space-between; flex-wrap: wrap; margin-top: 4rem;">
-    <div class="feature-card" style="flex: 1 1 30%; background: #fff; padding: 2rem; margin: 1rem; border-radius: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-        <h2>Gestión Integral</h2>
-        <p>Administra todas tus propiedades desde un solo lugar con herramientas intuitivas.</p>
-    </div>
-    <div class="feature-card" style="flex: 1 1 30%; background: #fff; padding: 2rem; margin: 1rem; border-radius: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-        <h2>Análisis Avanzado</h2>
-        <p>Obtén insights valiosos con reportes detallados y visualizaciones claras.</p>
-    </div>
-    <div class="feature-card" style="flex: 1 1 30%; background: #fff; padding: 2rem; margin: 1rem; border-radius: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-        <h2>Seguridad Garantizada</h2>
-        <p>Protección de datos de nivel empresarial para tu tranquilidad total.</p>
-    </div>
-</section>
-
+<div style="display: flex; justify-content: space-between; margin-top: 3rem;">
+    <a href="{% url 'seleccionar_rol' 'cliente' %}" class="button">Cliente</a>
+    <a href="{% url 'seleccionar_rol' 'admin' %}" class="button">Admin</a>
+</div>
 {% endblock %}
-

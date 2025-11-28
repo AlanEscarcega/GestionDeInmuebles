@@ -1,0 +1,33 @@
+{% extends "UrbanStart/base.html" %}
+
+{% block title %}Catálogo{% endblock %}
+
+{% block content %}
+<h1>Catálogo de Casas</h1>
+
+{% if casas %}
+    <div class="catalogo-grid">
+        {% for casa in casas %}
+            <div class="casa-card">
+                {% if casa.imagen %}
+                    <img src="{{ casa.imagen.url }}" alt="Imagen de casa">
+                {% endif %}
+
+                <h2>{{ casa.titulo }}</h2>
+                <p><strong>Ubicación:</strong> {{ casa.locacion }}</p>
+                <p><strong>Precio:</strong> ${{ casa.precio }}</p>
+                <p>{{ casa.descripcion }}</p>
+
+                {% if casa.apartada %}
+                    <p style="color: red; font-weight: bold;">Apartada</p>
+                {% else %}
+                    <p style="color: green; font-weight: bold;">Disponible</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No hay casas disponibles en este momento.</p>
+{% endif %}
+
+{% endblock %}

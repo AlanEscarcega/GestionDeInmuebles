@@ -1,0 +1,68 @@
+{% extends "UrbanStart/base.html" %}
+{% block content %}
+
+<h1 style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-weight: 600;">
+    Gestión de Casas
+</h1>
+<!-- Dashboard resumen -->
+<div style="margin-bottom: 20px; display: flex; gap: 30px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+    <div style="padding: 10px 15px; background-color: #f5f5f7; border-radius: 10px;">
+        <strong>Total Casas:</strong> {{ total_casas }}
+    </div>
+    <div style="padding: 10px 15px; background-color: #f5f5f7; border-radius: 10px;">
+        <strong>Total Solicitudes:</strong> {{ total_solicitudes }}
+    </div>
+    <div style="padding: 10px 15px; background-color: #f5f5f7; border-radius: 10px;">
+        <strong>Solicitudes Pendientes:</strong> {{ solicitudes_pendientes }}
+    </div>
+</div>
+
+<!-- Links de navegación Admin -->
+<div style="margin-bottom: 20px;">
+    <a href="{% url 'admin_solicitudes' %}" style="margin-right: 15px; text-decoration: none; color: #007aff; font-weight: 500;">
+        Ver Solicitudes de Contacto
+    </a>
+    <a href="{% url 'admin_casas' %}" style="text-decoration: none; color: #007aff; font-weight: 500;">
+        Volver a Gestión de Casas
+    </a>
+</div>
+
+<!-- Botón Crear Casa -->
+<a href="{% url 'admin_casa_crear' %}" 
+   style="display: inline-block; padding: 10px 20px; background-color: #007aff; color: white; border-radius: 8px; text-decoration: none; font-weight: 500; margin-bottom: 20px;">
+    Crear nueva casa
+</a>
+
+<hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 20px;">
+
+<!-- Tabla de Casas -->
+<table style="width:100%; border-collapse: collapse; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+    <thead style="background-color: #f5f5f7;">
+        <tr>
+            <th style="padding: 12px; text-align: left;">ID</th>
+            <th style="padding: 12px; text-align: left;">Título</th>
+            <th style="padding: 12px; text-align: left;">Precio</th>
+            <th style="padding: 12px; text-align: left;">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for casa in casas %}
+        <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 12px;">{{ casa.id }}</td>
+            <td style="padding: 12px;">{{ casa.titulo }}</td>
+            <td style="padding: 12px;">${{ casa.precio }}</td>
+            <td style="padding: 12px;">
+                <a href="{% url 'admin_casa_editar' casa.id %}" style="color: #007aff; text-decoration: none; margin-right: 10px;">Editar</a>
+                <a href="{% url 'admin_casa_eliminar' casa.id %}" style="color: #ff3b30; text-decoration: none;">Eliminar</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4" style="padding: 12px; text-align: center; color: #8e8e93;">No hay casas registradas.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
+

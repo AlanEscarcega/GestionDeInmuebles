@@ -1,0 +1,50 @@
+{% extends "UrbanStart/base.html" %}
+{% block content %}
+
+<h1 style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-weight: 600;">
+    Solicitudes de Contacto
+</h1>
+
+<!-- Link de navegación Admin -->
+<div style="margin-bottom: 20px;">
+    <a href="{% url 'admin_casas' %}" style="text-decoration: none; color: #007aff; font-weight: 500;">
+        Volver a Gestión de Casas
+    </a>
+</div>
+
+<hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 20px;">
+
+<!-- Tabla de Solicitudes -->
+<table style="width:100%; border-collapse: collapse; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+    <thead style="background-color: #f5f5f7;">
+        <tr>
+            <th style="padding: 12px; text-align: left;">ID</th>
+            <th style="padding: 12px; text-align: left;">Nombre</th>
+            <th style="padding: 12px; text-align: left;">Email</th>
+            <th style="padding: 12px; text-align: left;">Mensaje</th>
+            <th style="padding: 12px; text-align: left;">Estado</th>
+            <th style="padding: 12px; text-align: left;">Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in solicitudes %}
+        <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 12px;">{{ s.id }}</td>
+            <td style="padding: 12px;">{{ s.nombre }}</td>
+            <td style="padding: 12px;">{{ s.email }}</td>
+            <td style="padding: 12px;">{{ s.mensaje }}</td>
+            <td style="padding: 12px;">{{ s.estado }}</td>
+            <td style="padding: 12px;">{{ s.timestamp }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6" style="padding: 12px; text-align: center; color: #8e8e93;">
+                No hay solicitudes registradas.
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
+
