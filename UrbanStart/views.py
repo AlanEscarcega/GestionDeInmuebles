@@ -4,6 +4,8 @@ import os
 from dotenv import load_dotenv
 from .models import Casa, Solicitud
 from .decorators import requiere_cliente
+from django.http import JsonResponse
+from django.db.models import Q
 
 
 # ----------------------------------------
@@ -74,6 +76,44 @@ def seleccionar_rol(request, rol):
         return redirect('catalogo' if rol == 'cliente' else 'admin_casas')
 
     return redirect('home')
+
+
+def buscar_casas(request):
+    """
+    Vista que maneja la solicitud AJAX para buscar casas.
+    Retorna una lista de casas filtradas en formato JSON.
+    """
+    # 1. Obtener el término de búsqueda del parámetro 'q'
+    query = request.GET.get('q', '')
+    casas_data = []
+
+    if query:
+        # 2. Construir la consulta de búsqueda usando Q objects
+        #    __icontains es para "case-insensitive containment" (contiene, ignorando mayúsculas/minúsculas)
+        casas = Casa.objects.filter(
+            Q(titulo__icontains=query) |
+            Q(locacion__icontains=query) |
+            Q(descripcion__icontains=query)
+        ).distinct() # distinct() para evitar duplicados si se usaran relaciones
+
+    else:
+        # 3. Si no hay término de búsqueda, devolver todas las casas
+        casas = Casa.objects.all() 
+
+    # 4. Preparar los datos para enviarlos en JSON
+    for casa in casas:
+        # Debemos serializar la información que necesita el template
+        casas_data.append({
+            'titulo': casa.titulo,
+            'locacion': casa.locacion,
+            'precio': str(casa.precio), # Convertir DecimalField a string
+            'descripcion': casa.descripcion,
+            'apartada': casa.apartada,
+            'imagen_url': casa.imagen.url if casa.imagen else None # Manejar la URL de la imagen
+        })
+
+    # 5. Devolver los datos como una respuesta JSON
+    return JsonResponse({'casas': casas_data})
 
 
 # ----------------------------------------

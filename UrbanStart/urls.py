@@ -14,6 +14,7 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('about/', views.about, name='about'),
     path('catalogo/', views.catalogo, name='catalogo'),
+    path('buscar_casas/', views.buscar_casas, name='buscar_casas'),
     path('rol/<str:rol>/', views.seleccionar_rol, name='seleccionar_rol'),
 
     # CRUD ADMIN CASAS
