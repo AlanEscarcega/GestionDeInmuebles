@@ -6,28 +6,101 @@
 <h1>Catálogo de Casas</h1>
 
 {% if casas %}
-    <div class="catalogo-grid">
-        {% for casa in casas %}
-            <div class="casa-card">
-                {% if casa.imagen %}
-                    <img src="{{ casa.imagen.url }}" alt="Imagen de casa">
-                {% endif %}
-
-                <h2>{{ casa.titulo }}</h2>
-                <p><strong>Ubicación:</strong> {{ casa.locacion }}</p>
-                <p><strong>Precio:</strong> ${{ casa.precio }}</p>
-                <p>{{ casa.descripcion }}</p>
-
-                {% if casa.apartada %}
-                    <p style="color: red; font-weight: bold;">Apartada</p>
-                {% else %}
-                    <p style="color: green; font-weight: bold;">Disponible</p>
-                {% endif %}
-            </div>
-        {% endfor %}
-    </div>
+    <label for="buscar_casas">Buscar: </label>
+    <input
+        type="text"
+        name="buscar_casas"
+        id="buscar_casas"
+        placeholder="Escribe para buscar..."
+    >
+    <div id="catalogo-grid"></div>
 {% else %}
     <p>No hay casas disponibles en este momento.</p>
 {% endif %}
+
+<style>
+    .estado-apartada { color: red; font-weight: bold; }
+    .estado-disponible { color: green; font-weight: bold; }
+</style>
+
+<script>
+    // 1. Seleccionar elementos del DOM
+    const buscarInput = document.getElementById('buscar_casas');
+    const catalogoGrid = document.getElementById('catalogo-grid');
+    // URL de la vista de búsqueda de Django (usando el tag % url %)
+    const buscarUrl = "{% url 'buscar_casas' %}"; 
+    
+    // **NOTA:** Usaremos un temporizador (debounce) para que la búsqueda no se ejecute
+    // en cada tecla, sino solo 300ms después de que el usuario deja de escribir.
+    let debounceTimer;
+
+    // 2. Función para generar el HTML de una tarjeta de casa
+    function generarCasaHTML(casa) {
+        // Usa ` para templates literales en JavaScript
+        return `
+            <div class="casa-card">
+                ${casa.imagen_url ? `<img src="${casa.imagen_url}" alt="Imagen de casa">` : ''}
+                <h2>${casa.titulo}</h2>
+                <p><strong>Ubicación:</strong> ${casa.locacion}</p>
+                <p><strong>Precio:</strong> $${casa.precio}</p>
+                <p>${casa.descripcion}</p>
+                ${casa.apartada 
+                    ? '<p class="estado-apartada">Apartada</p>' 
+                    : '<p class="estado-disponible">Disponible</p>'
+                }
+            </div>
+        `;
+    }
+
+    // 3. Función principal que busca y actualiza el catálogo
+    function buscarCasas() {
+        // Obtener el valor del input, eliminando espacios en blanco al inicio/final
+        const query = buscarInput.value.trim();
+        
+        // 4. Construir la URL con el parámetro de búsqueda (q)
+        const urlConQuery = `${buscarUrl}?q=${encodeURIComponent(query)}`;
+
+        // 5. Realizar la solicitud AJAX usando fetch
+        fetch(urlConQuery)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Parsea la respuesta JSON
+            })
+            .then(data => {
+                // 6. Procesar la data y actualizar el DOM
+                let nuevoHTML = '';
+                
+                if (data.casas && data.casas.length > 0) {
+                    // Mapear cada objeto de casa a su HTML y unirlos
+                    nuevoHTML = data.casas.map(generarCasaHTML).join('');
+                } else {
+                    // Mensaje si no se encuentran resultados
+                    nuevoHTML = '<p>No se encontraron casas que coincidan con la búsqueda.</p>';
+                }
+
+                // Reemplazar el contenido actual de la cuadrícula
+                catalogoGrid.innerHTML = nuevoHTML;
+            })
+            .catch(error => {
+                console.error('Hubo un problema con la operación fetch:', error);
+                catalogoGrid.innerHTML = '<p style="color: red;">Error al cargar las casas. Inténtalo de nuevo.</p>';
+            });
+    }
+
+    // 7. Event Listener para el input: Manejo del temporizador (debounce)
+    buscarInput.addEventListener('keyup', () => {
+        // Limpiar el temporizador anterior
+        clearTimeout(debounceTimer);
+
+        // Configurar un nuevo temporizador que llama a buscarCasas después de 300ms
+        // Esto imita el efecto "en vivo" pero optimizado para no hacer peticiones excesivas
+        debounceTimer = setTimeout(buscarCasas, 60);
+    });
+
+    // Mostrar en pantalla todas las casas
+    buscarCasas();
+</script>
 
 {% endblock %}
